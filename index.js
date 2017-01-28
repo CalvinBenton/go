@@ -11,7 +11,7 @@ var s3 = new aws.S3()
 var upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'some-bucket',
+    bucket: 'hackcambridge-go',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
@@ -33,6 +33,7 @@ module.exports = function (app) {
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
   console.log(req.file);  
+  res.send('Successfully uploaded ' + req.files.length + ' files!')
 
   
 
