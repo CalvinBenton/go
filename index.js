@@ -8,6 +8,10 @@ var multerS3 = require('multer-s3')
 
 var s3 = new aws.S3()
 
+var fileName = Date.now().toString();
+var url1 = "https://s3-us-west-2.amazonaws.com/hackcambridge-go/";
+var url2 = url1.concat(fileName);
+
 var upload = multer({
   storage: multerS3({
     s3: s3,
@@ -16,7 +20,7 @@ var upload = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString())
+      cb(null, fileName)
     }
   })
 })
@@ -33,7 +37,7 @@ module.exports = function (app) {
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
   console.log(req.file);  
-  res.send('Successfully uploaded ' + req.files.length + ' files!')
+  res.send(url2)
 
   
 
@@ -42,7 +46,9 @@ module.exports = function (app) {
 
     app.get('/hotel', function(req, res) {
         app.get('http://partners.api.skyscanner.net/apiservices/hotels/autosuggest/v2/UK/EUR/en-GB/pari?apikey=prtl6749387986743898559646983194', function(req, res) {
-        console.log(res)
+        console.log(fileName)
+
+        res.send(url2);
 
     });
     });
