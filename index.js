@@ -45,6 +45,14 @@ module.exports = function (app) {
 
 })
 
+    app.post('/cat', function(req, res) {
+        var obj = new Tour(req.body);
+        obj.save(function(err, obj) {
+            if(err) return console.error(err);
+            res.status(200).json(obj);
+        });
+    });
+
     app.get('/hotel', function(req, res) {
         app.get('http://partners.api.skyscanner.net/apiservices/hotels/autosuggest/v2/UK/EUR/en-GB/pari?apikey=prtl6749387986743898559646983194', function(req, res) {
         console.log(fileName)
