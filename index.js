@@ -16,6 +16,7 @@ var upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'hackcambridge-go',
+     acl: 'public-read-write',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
@@ -55,10 +56,8 @@ module.exports = function (app) {
     });
 
     app.get('/hotel', function(req, res) {
-        app.get('http://partners.api.skyscanner.net/apiservices/hotels/autosuggest/v2/UK/EUR/en-GB/pari?apikey=prtl6749387986743898559646983194', function(req, res) {
-        console.log(fileName)
-
-        res.send(url2);
+        app.get('http://partners.api.skyscanner.net/apiservices/hotels/autosuggest/v2/UK/EUR/en-GB/pari?apikey=prtl6749387986743898559646983194', function(request, response) {
+            console.log(response.body);
 
     });
     });
