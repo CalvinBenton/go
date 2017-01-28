@@ -13,8 +13,11 @@ module.exports = function (app) {
         var obj = new Tour(req.body);
         obj.save(function(err, obj) {
             if(err) return console.error(err);
+            console.log(obj);
             res.status(200).json(obj);
         });
     });
+
+
 
 };
