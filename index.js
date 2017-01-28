@@ -1,26 +1,25 @@
 var Tour = require('./tours.js');
 
-var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
 
-const Speech = require('@google-cloud/speech');
+var aws = require('aws-sdk')
+var express = require('express')
+var multer = require('multer')
+var multerS3 = require('multer-s3')
 
-function syncRecognize (filename) {
-  const speech = Speech();
+var s3 = new aws.S3()
 
-  const config = {
-    encoding: 'LINEAR16',
-    sampleRate: 16000
-  };
-
-  return speech.recognize(filename, config)
-    .then((results) => {
-      const transcription = results[0];
-      console.log(`Transcription: ${transcription}`);
-      return transcription;
-    });
-}
-
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'some-bucket',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+})
 module.exports = function (app) {
 
     app.get('/tours', function(req, res) {
