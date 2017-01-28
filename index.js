@@ -36,8 +36,9 @@ module.exports = function (app) {
     app.post('/tours', upload.single('audio'), function (req, res, next) {
   // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
-  console.log(req.file);  
-  res.send(url2)
+         console.log(fileName)
+
+        res.send(url2);
 
   
 
