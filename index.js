@@ -17,6 +17,7 @@ var upload = multer({
     s3: s3,
     bucket: 'hackcambridge-go',
      acl: 'public-read-write',
+     contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
