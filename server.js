@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test');
+mongoose.connect('mongodb://calvin:calvin@ds035059.mlab.com:35059/heroku_nddr0s0s');
 var db = mongoose.connection;
 mongoose.Promise = global.Promise;
 
