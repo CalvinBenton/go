@@ -50,7 +50,7 @@ module.exports = function (app) {
         var obj = new Tour(req.body);
         obj.save(function(err, obj) {
             if(err) return console.error(err);
-            res.json({success: true}});
+            res.json({success: true});
         });
     });
 
