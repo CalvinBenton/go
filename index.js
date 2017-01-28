@@ -1,5 +1,8 @@
 var Tour = require('./tours.js');
 
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
+
 const Speech = require('@google-cloud/speech');
 
 function syncRecognize (filename) {
@@ -27,9 +30,15 @@ module.exports = function (app) {
         })
     });
 
-    app.post('/tours', function(req, res) {
-        console.log(req.body);
-    });
+    app.post('/tours', upload.single('audio'), function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+  console.log(req.file);  
+
+  
+
+
+})
 
     app.get('/hotel', function(req, res) {
         app.get('http://partners.api.skyscanner.net/apiservices/hotels/autosuggest/v2/UK/EUR/en-GB/pari?apikey=prtl6749387986743898559646983194', function(req, res) {
