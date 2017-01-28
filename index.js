@@ -38,7 +38,8 @@ module.exports = function (app) {
   // req.body will hold the text fields, if there were any
          console.log(fileName)
 
-        res.send(url2);
+
+        res.json({url: url2});
 
   
 
