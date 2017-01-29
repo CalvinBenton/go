@@ -8,8 +8,8 @@ var tourSchema = mongoose.Schema({
     audioUrl: String,
     createdAt: Number,
     rating: Number,
-    noOfRatings: Number
-
+    noOfRatings: Number,
+    audioUrlSpa: {type: String, default: null}
 });
 
 module.exports = mongoose.model('Tour', tourSchema);

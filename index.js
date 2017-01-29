@@ -11,6 +11,7 @@ var s3 = new aws.S3()
 var fileName = Date.now().toString();
 var url1 = "https://s3-us-west-2.amazonaws.com/hackcambridge-go/";
 var url2 = url1.concat(fileName);
+var ssurl = "http://partners.api.skyscanner.net/apiservices/hotels/liveprices/v2/UK/EUR/en-GB/27539733/2014-12-04/2014-12-10/2/1?apiKey=ha731738434387524676454915828415"
 
 var upload = multer({
   storage: multerS3({
@@ -27,6 +28,14 @@ var upload = multer({
   })
 })
 module.exports = function (app) {
+
+    function ssget(){
+        app.get(ssurl, function(request, response) {
+            console.log(response.results)
+            return response.results;
+
+    });
+    }
 
     app.get('/tours', function(req, res) {
         Tour.find({}, function (err, obj) {
@@ -57,10 +66,8 @@ module.exports = function (app) {
     });
 
     app.get('/hotel', function(req, res) {
-        app.get('http://partners.api.skyscanner.net/apiservices/hotels/autosuggest/v2/UK/EUR/en-GB/pari?apikey=prtl6749387986743898559646983194', function(request, response) {
-            console.log(response.body);
-
-    });
+        var result = ssget();
+        console.log(result);
     });
 
 
