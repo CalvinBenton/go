@@ -134,7 +134,7 @@ module.exports = function (app) {
   }).then(function(json) {
     json.hotels.forEach(function(hotel){
       console.log(hotel);
-      hotelLongLats.push({longi: hotel.longitude, lati: hotel.latitude})
+      hotelLongLats.push({longi: hotel.longitude, lati: hotel.latitude, name: hotel.name, availability: hotel.tag})
       console.log(hotelLongLats);
     })
     res.json(hotelLongLats);
