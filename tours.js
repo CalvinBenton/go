@@ -9,7 +9,9 @@ var tourSchema = mongoose.Schema({
     createdAt: Number,
     rating: Number,
     noOfRatings: Number,
-    audioUrlSpa: {type: String, default: null}
+    audioUrlSpa: {type: String, default: null},
+    audioUrlEng: {type: String, default: null},
+    audioUrlFre: {type: String, default: null}
 });
 
 module.exports = mongoose.model('Tour', tourSchema);
