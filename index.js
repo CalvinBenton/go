@@ -19,7 +19,7 @@ var speechTranslateUrl = 'wss://dev.microsofttranslator.com/speech/translate?api
 
 // input wav file is in PCM 16bit, 16kHz, mono with proper WAV header
 var file = 'helloworld.wav';
-  
+
 
 var s3 = new aws.S3()
 
@@ -41,11 +41,11 @@ function syncRecognize (filename) {
 
   // Detects speech in the audio file, e.g. "./resources/audio.raw"
   return speech.recognize(filename, config)
-    .then((results) => {
-      const transcription = results[0];
-      console.log(`Transcription: ${transcription}`);
-      return transcription;
-    });
+  .then((results) => {
+    const transcription = results[0];
+    console.log(`Transcription: ${transcription}`);
+    return transcription;
+  });
 }
 // [END speech_sync_recognize]
 
@@ -75,10 +75,37 @@ module.exports = function (app) {
   }
 
   app.get('/tours', function(req, res) {
-    Tour.find({}, function (err, obj) {
+
+     Tour.find({}, function (err, obj) {
       if(err) return console.error(err);
       res.json(obj);
     })
+
+    /*var hotelIds = [];
+    Tour.find({}, function (err, tours) {
+      if(err) return console.error(err);
+      tours.forEach(function(tour){
+        if (tour.hotelId != null) {
+          hotelIds.push(tour.hotelId);
+        }
+      });
+
+      fetch(ssurl)
+      .then(function(res) {
+        return res.json();
+      }).then(function(json) {
+        //res.json(json.hotels);
+        json.hotels.forEach(function(hotel){
+          if (hotelIds.index(hotel.hotel_id) != -1) {
+            var t = new Tour();
+            tour.lati = 
+          } 
+        });
+      });
+
+
+      res.json(obj);
+    })*/
   });
 
   app.post('/tours', upload.single('audio'), function (req, res, next) {
@@ -99,19 +126,24 @@ module.exports = function (app) {
   });
 
   app.get('/hotel', function(req, res) {
-
+    var hotelLongLats = []
 
    fetch(ssurl)
-    .then(function(res) {
-        return res.json();
-    }).then(function(json) {
-        res.json(json.hotels);
-    });
+   .then(function(res) {
+    return res.json();
+  }).then(function(json) {
+    json.hotels.forEach(function(hotel){
+      console.log(hotel);
+      hotelLongLats.push({longi: hotel.longitude, lati: hotel.latitude})
+      console.log(hotelLongLats);
+    })
+    res.json(hotelLongLats);
   });
+});
 
 
   app.get('/audio', function(req, res) {
-   
+
   });
 
 
