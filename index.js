@@ -5,14 +5,28 @@ var aws = require('aws-sdk')
 var express = require('express')
 var multer = require('multer')
 var multerS3 = require('multer-s3')
-const Speech = require('@google-cloud/speech')
+
+var fetch = require('node-fetch');
+
+var request = require('request');
+var wsClient = require('websocket').client;
+var fs = require('fs');
+var streamBuffers = require('stream-buffers');
+
+var azureDataMarketClientId = '[Azure Data Market client id]';
+var azureDataMarketClientSecret = '[Azure Data Market client secret]';
+var speechTranslateUrl = 'wss://dev.microsofttranslator.com/speech/translate?api-version=1.0&from=en&to=fr';
+
+// input wav file is in PCM 16bit, 16kHz, mono with proper WAV header
+var file = 'helloworld.wav';
+  
 
 var s3 = new aws.S3()
 
 var fileName = Date.now().toString()+".mp3";
 var url1 = "https://s3-us-west-2.amazonaws.com/hackcambridge-go/";
 var url2 = url1.concat(fileName);
-var ssurl = "http://partners.api.skyscanner.net/apiservices/hotels/liveprices/v2/UK/EUR/en-GB/27539733/2014-12-04/2014-12-10/2/1?apiKey=ha731738434387524676454915828415"
+var ssurl = "http://partners.api.skyscanner.net/apiservices/hotels/liveprices/v2/UK/EUR/en-GB/27539698/2017-01-29/2017-01-31/2/1?apiKey=ha731738434387524676454915828415"
 
 // [START speech_sync_recognize]
 function syncRecognize (filename) {
@@ -85,8 +99,19 @@ module.exports = function (app) {
   });
 
   app.get('/hotel', function(req, res) {
-    var result = ssget();
-    console.log(result);
+
+
+   fetch(ssurl)
+    .then(function(res) {
+        return res.json();
+    }).then(function(json) {
+        res.json(json.hotels);
+    });
+  });
+
+
+  app.get('/audio', function(req, res) {
+   
   });
 
 
