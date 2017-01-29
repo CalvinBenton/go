@@ -9,6 +9,7 @@ var tourSchema = mongoose.Schema({
     createdAt: Number,
     rating: Number,
     noOfRatings: Number,
+    author: String,
     audioUrlSpa: {type: String, default: null},
     audioUrlEng: {type: String, default: null},
     audioUrlFre: {type: String, default: null}
