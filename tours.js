@@ -12,7 +12,8 @@ var tourSchema = mongoose.Schema({
     author: String,
     audioUrlSpa: {type: String, default: null},
     audioUrlEng: {type: String, default: null},
-    audioUrlFre: {type: String, default: null}
+    audioUrlFre: {type: String, default: null},
+    name: String
 });
 
 module.exports = mongoose.model('Tour', tourSchema);
